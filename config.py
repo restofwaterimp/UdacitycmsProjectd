@@ -3,7 +3,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-key'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'EQogul.gJY-g7bc.m~yCN1TV5v10m_-282'
 
     BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT') or 'cmsstorage1234'
     BLOB_STORAGE_KEY = os.environ.get('BLOB_STORAGE_KEY') or 'mBy+WA3D+tbw6wG9k2S9P0ytepKg+mOhVnuhce79MXhtVgFGU7tgZxBvSWPzb0pCx92sRvqORv+LBd4igUFosw=='
@@ -30,7 +30,7 @@ class Config(object):
     AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app, else put tenant name
     # AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
 
-    CLIENT_ID = "ENTER_CLIENT_ID_HERE"
+    CLIENT_ID = "1faa33b8-dcb6-4d25-9129-1d609d3705df"
 
     REDIRECT_PATH = "/getAToken"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
 
