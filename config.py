@@ -10,7 +10,7 @@ class Config(object):
     BLOB_CONTAINER = os.environ.get('BLOB_CONTAINER') or 'images'
 
     SQL_SERVER = os.environ.get('SQL_SERVER') or 'cmsproject2.database.windows.net'
-    SQL_DATABASE = os.environ.get('SQL_DATABASE') or 'msproject2db'
+    SQL_DATABASE = os.environ.get('SQL_DATABASE') or 'cmsproject2db'
     SQL_USER_NAME = os.environ.get('SQL_USER_NAME') or 'cms_admin'
     SQL_PASSWORD = os.environ.get('SQL_PASSWORD') or 'Maidream0925'
     # Below URI may need some adjustments for driver version, based on your OS, if running locally
