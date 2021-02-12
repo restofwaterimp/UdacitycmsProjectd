@@ -38,7 +38,9 @@ class Config(object):
     CLIENT_ID = "f14213e5-f176-4187-b3bf-9a2f72ffec61"
   
 
-    REDIRECT_PATH = "/getAToken"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
+    #REDIRECT_PATH = "/getAToken"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
+    REDIRECT_PATH = "/gettoken"
+
     
 
     # You can find the proper permission names from this document
