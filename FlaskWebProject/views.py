@@ -101,7 +101,7 @@ def authorized():
         acquire_token_by_authorization_code(
             request.args['code'],
             scopes=Config.SCOPE,
-            redirect_uri=url_for('authorized', _external=True, _scheme='https')
+            redirect_uri=url_for('login', _external=True, _scheme='https')
             )
         #result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
         if "error" in result:
