@@ -99,7 +99,7 @@ def authorized():
 
         #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
         #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('login', _external=True, _scheme='https'))
-        result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
+        #result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
         if "error" in result:
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
@@ -146,4 +146,4 @@ def _build_auth_url(authority=None, scopes=None, state=None):
     return _build_msal_app(authority=authority).get_authorization_request_url(
         scopes or [],
         state=state or str(uuid.uuid4()),
-        redirect_uri=url_for('authorized', _external=True, _schema='https'))
+        redirect_uri=url_for('home', _external=True, _schema='https'))
