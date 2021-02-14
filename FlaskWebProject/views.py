@@ -101,12 +101,12 @@ def authorized():
         cache = _load_cache()
         # TODO: Acquire a token from a built msal app, along with the appropriate redirect URI
         app.logger.info("before msal")
-        result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorize', _external=True, _scheme='https'))
+        #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorize', _external=True, _scheme='https'))
         app.logger.info("after msal")
         #result = _build_msal_app(cache=cache).acquire_token_by_auth_code_flow(
         #   session.get("flow", {}), request.args)
         #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('login', _external=True, _scheme='https'))
-        #result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
+        result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
         if "error" in result:
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
@@ -147,9 +147,10 @@ def _save_cache(cache):
 def _build_msal_app(cache=None, authority=None):
     # TODO: Return a ConfidentialClientApplication
     app.logger.info("build msam app")
-    return msal.ConfidentialClientApplication(
-        Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
-        client_credential=Config.CLIENT_SECRET,token_cache=cache)
+    # return msal.ConfidentialClientApplication(
+    #     Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
+    #     client_credential=Config.CLIENT_SECRET,token_cache=cache)
+    return None
 
 # def _build_auth_code_flow(authority=None, scopes=None):
 #     return _build_msal_app(authority=authority).initiate_auth_code_flow(
@@ -159,7 +160,8 @@ def _build_msal_app(cache=None, authority=None):
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Return the full Auth Request URL with appropriate Redirect URI
     app.logger.info("build auth url")
-    return _build_msal_app(authority=authority).get_authorization_request_url(
-        scopes or [],
-        state=state or str(uuid.uuid4()),
-        redirect_uri=url_for('authorized', _external=True, _schema='https'))
+    # return _build_msal_app(authority=authority).get_authorization_request_url(
+    #     scopes or [],
+    #     state=state or str(uuid.uuid4()),
+    #     redirect_uri=url_for('authorized', _external=True, _schema='https'))
+    return None
