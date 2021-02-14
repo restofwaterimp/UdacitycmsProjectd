@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 # TODO: Add any logging levels and handlers with app.logger
 wsgi_app = app.wsgi_app
+# change logging level DEBUG -> INFO -> WARNING -> ERROR -> CRITICAL 
 app.logger.setLevel(logging.DEBUG)
 streamHandler = logging.StreamHandler()
 streamHandler.setLevel(logging.DEBUG)

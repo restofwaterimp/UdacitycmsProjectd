@@ -82,15 +82,14 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
-            app.logger.info("Login Success")
+            app.logger.info("Login Success" + user)
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
-    app.logger.info("Login Failed")
+    app.logger.info("Login Failed" + user)
     return render_template('login.html', title='Sign In', form=form, auth_url=auth_url)
 
 @app.route(Config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
-#@app.route('/getAToken')
 def authorized():
     if request.args.get('state') != session.get("state"):
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
@@ -99,8 +98,9 @@ def authorized():
     if request.args.get('code'):
         cache = _load_cache()
         # TODO: Acquire a token from a built msal app, along with the appropriate redirect URI
-
+        app.logger.info("before msal")
         result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
+        app.logger.info("after msal")
         #result = _build_msal_app(cache=cache).acquire_token_by_auth_code_flow(
         #   session.get("flow", {}), request.args)
         #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('login', _external=True, _scheme='https'))
@@ -146,10 +146,10 @@ def _build_msal_app(cache=None, authority=None):
         Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
         client_credential=Config.CLIENT_SECRET,token_cache=cache)
 
-def _build_auth_code_flow(authority=None, scopes=None):
-    return _build_msal_app(authority=authority).initiate_auth_code_flow(
-        scopes or [],
-        redirect_uri=url_for("authorized", _external=True))
+# def _build_auth_code_flow(authority=None, scopes=None):
+#     return _build_msal_app(authority=authority).initiate_auth_code_flow(
+#         scopes or [],
+#         redirect_uri=url_for("authorized", _external=True))
 
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Return the full Auth Request URL with appropriate Redirect URI
