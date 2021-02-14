@@ -20,6 +20,7 @@ imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.n
 @login_required
 def home():
     log = request.values.get('log_button')
+    app.logger.info("home")
     if log:
         if log == 'info':
             app.logger.info('No issue.')
@@ -131,6 +132,7 @@ def logout():
 
 def _load_cache():
     # TODO: Load the cache from `msal`, if it exists
+    app.logger.info("load cache")
     cache = msal.SerializableTokenCache()
     if session.get('token_cache'):
         cache.deserialize(session['token_cache'])
@@ -138,11 +140,13 @@ def _load_cache():
 
 def _save_cache(cache):
     # TODO: Save the cache, if it has changed
+    app.logger.info("save cache")
     if cache.has_state_changed:
         session['token_cache'] = cache.serialize()
 
 def _build_msal_app(cache=None, authority=None):
     # TODO: Return a ConfidentialClientApplication
+    app.logger.info("build msam app")
     return msal.ConfidentialClientApplication(
         Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
         client_credential=Config.CLIENT_SECRET,token_cache=cache)
@@ -154,6 +158,7 @@ def _build_msal_app(cache=None, authority=None):
 
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Return the full Auth Request URL with appropriate Redirect URI
+    app.logger.info("build auth url")
     return _build_msal_app(authority=authority).get_authorization_request_url(
         scopes or [],
         state=state or str(uuid.uuid4()),
