@@ -103,7 +103,7 @@ def authorized():
         # TODO: Acquire a token from a built msal app, along with the appropriate redirect URI
         app.logger.info("before msal")
         token = _build_msal_app(cache=cache, authority=Config.AUTHORITY)
-        result = token.acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
+        result = token.acquire_token_by_authorization_code(request.args['code'],scopes=app.config('SCOPE'),redirect_uri=url_for('authorized', _external=True, _scheme='https'))
         #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
         # result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
         #     request.args['code'],
@@ -153,7 +153,7 @@ def _save_cache(cache):
 
 def _build_msal_app(cache=None, authority=None):
     # TODO: Return a ConfidentialClientApplication
-    app.logger.info("build msam app")
+    app.logger.info("build msal app")
     return msal.ConfidentialClientApplication(
         Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
         client_credential=Config.CLIENT_SECRET,token_cache=cache)
