@@ -155,7 +155,7 @@ def _build_msal_app(cache=None, authority=None):
     # TODO: Return a ConfidentialClientApplication
     app.logger.info("build msam app")
     return msal.ConfidentialClientApplication(
-        app.config.get('CLIENT_ID'),authority=authority or app.config.get('AUTHORITY'),
+        Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
         client_credential=Config.CLIENT_SECRET,token_cache=cache)
     # return None
 
@@ -167,7 +167,7 @@ def _build_msal_app(cache=None, authority=None):
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Return the full Auth Request URL with appropriate Redirect URI
     app.logger.info("build auth url")
-    return _build_msal_app(app.config.get('CLIENT_ID'),authority=authority).get_authorization_request_url(
+    return _build_msal_app(authority=authority).get_authorization_request_url(
         scopes or [],
         state=state or str(uuid.uuid4()),
         redirect_uri=url_for('authorized', _external=True, _schema='https'))
