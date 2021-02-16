@@ -103,7 +103,7 @@ def authorized():
         # TODO: Acquire a token from a built msal app, along with the appropriate redirect URI
         app.logger.info("before msal")
         token = _build_msal_app(cache=cache)
-        result = token.acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
+        result = token.acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('getAToken', _external=True, _scheme='https'))
         #result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(request.args['code'],scopes=Config.SCOPE,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
         # result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
         #     request.args['code'],
@@ -171,5 +171,5 @@ def _build_auth_url(authority=None, scopes=None, state=None):
     return _build_msal_app(None, authority=authority).get_authorization_request_url(
         scopes or [],
         state=state or str(uuid.uuid4()),
-        redirect_uri=url_for('authorized', _external=True, _schema='https'))
+        redirect_uri=url_for('getAToken', _external=True, _schema='https'))
     # return None
